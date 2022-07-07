@@ -5,14 +5,13 @@ import PrivateRoute from "./components/PrivateRoute";
 import HomePage from "./pages/HomePage";
 
 function App() {
-   const isAuthenticated = !!window.localStorage.getItem('_token');
+
    return (
       <Router>
          <Routes>
             <Route path="/" element={
-               <PrivateRoute isAuth={isAuthenticated}>
-                  <HomePage />
-               </PrivateRoute>
+               <HomePage />
+
             } />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />

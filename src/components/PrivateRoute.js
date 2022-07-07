@@ -1,12 +1,12 @@
 import React from 'react'
-import { Navigate } from 'react-router-dom'
 
-function PrivateRoute({ isAuth, children }) {
+function PrivateWrapper({ children }) {
+    const token = window.localStorage.getItem('_token');
     return (
         <>
-            {isAuth ? children : <Navigate to="/login" replace={true} />}
+            {token ? children : null}
         </>
     )
 }
 
-export default PrivateRoute
+export default PrivateWrapper

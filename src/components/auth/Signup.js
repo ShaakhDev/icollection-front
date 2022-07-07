@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import FormAction from './FormAction';
 import { sFields } from './formFields'
 import FormWrapper from './FormWrapper';
+import { useNavigate } from 'react-router-dom';
 import Input from './Input';
-import { CreateAccount } from "../../lib/fetch";
-import { useNavigate } from "react-router-dom";
-import Notification from "../Notification";
+import Notification from "components/Notification";
+import { useSignupUserMutation } from 'redux';
 
 const signupFields = sFields;
 let fieldsState = {};
@@ -14,8 +14,9 @@ signupFields.forEach(field => fieldsState[field.id] = '');
 
 function Signup() {
    const navigate = useNavigate()
+   const [regData, setRegData] = useState({})
+   const [signupUser, { isLoading, isError, isSuccess }] = useSignupUserMutation()
    const [signupState, setSignupState] = useState(fieldsState);
-   const [isLoading, setIsLoading] = useState(false);
    const [notification, setNotification] = useState({
       isActive: false,
       message: '',
@@ -27,14 +28,40 @@ function Signup() {
    const handleSubmit = async (e) => {
       e.preventDefault();
       const { username, password, email } = signupState
-      const bodyObj = JSON.stringify({
+      const bodyObj = {
          user_name: username,
          user_password: password,
          user_email: email
-      })
-      const data = await CreateAccount(bodyObj, setIsLoading, setNotification, navigate)
-      console.log(data)
+      }
+      const data = await signupUser(bodyObj)
+      setRegData(data)
    }
+
+   useEffect(() => {
+      if (isSuccess) {
+         navigate('/login')
+         console.log(regData)
+      }
+   }, [isSuccess, regData.ok, navigate]);
+
+
+   useEffect(() => {
+      if (isError) {
+         setNotification({
+            isActive: true,
+            message: regData.message,
+            code: regData.status
+         })
+         setTimeout(() => {
+            setNotification({
+               isActive: false,
+               message: null,
+               code: null
+            })
+         }, 3000)
+         console.log(regData)
+      }
+   }, [isError, regData])
 
    return (
       <>
@@ -46,27 +73,26 @@ function Signup() {
                setNotification={setNotification}
             />
          }
-         <FormWrapper>
-            <form className='mt-8 space-y-6' onSubmit={handleSubmit}>
-               {
-                  signupFields.map(field =>
-                     <Input
-                        key={field.id}
-                        handleChange={handleChange}
-                        value={signupState[field.id]}
-                        id={field.id}
-                        type={field.type}
-                        isRequired={field.isRequired}
-                        placeholder={field.placeholder}
+         <FormWrapper handleSubmit={handleSubmit}>
+            {
+               signupFields.map(field =>
+                  <Input
+                     key={field.id}
+                     handleChange={handleChange}
+                     value={signupState[field.id]}
+                     id={field.id}
+                     type={field.type}
+                     isRequired={field.isRequired}
+                     placeholder={field.placeholder}
 
-                     />
-                  )
-               }
-               <FormAction
-                  text={isLoading ? 'Sending...' : 'Signup'}
-                  handleSubmit={handleSubmit}
-               />
-            </form>
+                  />
+               )
+            }
+            <FormAction
+               isLoading={isLoading}
+               text="Sign Up"
+               handleSubmit={handleSubmit}
+            />
          </FormWrapper>
       </>
    )
