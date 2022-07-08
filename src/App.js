@@ -7,17 +7,18 @@ import HomePage from "./pages/HomePage";
 function App() {
 
    return (
-      <Router>
-         <Routes>
-            <Route path="/" element={
-               <HomePage />
+      <div className="h-screen bg-white dark:bg-dark transition duration-200">
+         <Router>
+            <Routes>
+               <Route path="/" element={
+                  <HomePage />
 
-            } />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-         </Routes>
-      </Router>
-
+               } />
+               <Route path="/login" element={<LoginPage />} />
+               <Route path="/signup" element={<SignupPage />} />
+            </Routes>
+         </Router>
+      </div>
    );
 }
 

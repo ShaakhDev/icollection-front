@@ -14,8 +14,7 @@ signupFields.forEach(field => fieldsState[field.id] = '');
 
 function Signup() {
    const navigate = useNavigate()
-   const [regData, setRegData] = useState({})
-   const [signupUser, { isLoading, isError, isSuccess }] = useSignupUserMutation()
+   const [signupUser, { isLoading, isError, isSuccess, data }] = useSignupUserMutation()
    const [signupState, setSignupState] = useState(fieldsState);
    const [notification, setNotification] = useState({
       isActive: false,
@@ -33,24 +32,23 @@ function Signup() {
          user_password: password,
          user_email: email
       }
-      const data = await signupUser(bodyObj)
-      setRegData(data)
+      await signupUser(bodyObj)
    }
 
    useEffect(() => {
       if (isSuccess) {
          navigate('/login')
-         console.log(regData)
+         console.log(data)
       }
-   }, [isSuccess, regData.ok, navigate]);
+   }, [isSuccess, data, navigate]);
 
 
    useEffect(() => {
       if (isError) {
          setNotification({
             isActive: true,
-            message: regData.message,
-            code: regData.status
+            message: data.message,
+            code: data.status
          })
          setTimeout(() => {
             setNotification({
@@ -59,9 +57,9 @@ function Signup() {
                code: null
             })
          }, 3000)
-         console.log(regData)
+         console.log(data)
       }
-   }, [isError, regData])
+   }, [isError, data])
 
    return (
       <>

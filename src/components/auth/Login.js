@@ -12,8 +12,7 @@ loginFields.forEach(field => fieldsState[field.id] = '');
 
 function Login() {
    const navigate = useNavigate()
-   const [loginData, setLoginData] = useState({})
-   const [loginUser, { isLoading, isSuccess, isError }] = useLoginUserMutation();
+   const [loginUser, { isLoading, isSuccess, isError, data }] = useLoginUserMutation();
    const [loginState, setLoginState] = useState(fieldsState);
    const [notification, setNotification] = useState({
       isActive: false,
@@ -23,9 +22,9 @@ function Login() {
 
 
    useEffect(() => {
-      if (isSuccess && loginData !== {}) {
-         console.log(loginData)
-         localStorage.setItem("JWTToken", loginData.data?.token)
+      if (data && data.data.access_token) {
+         console.log(data)
+         localStorage.setItem("access_token", data.data?.access_token)
          navigate('/')
       }
    }, [isSuccess]);
@@ -35,8 +34,8 @@ function Login() {
       if (isError) {
          setNotification({
             isActive: true,
-            message: loginData.message,
-            code: loginData.status
+            message: data.message,
+            code: data.status
          })
          setTimeout(() => {
             setNotification({
@@ -60,9 +59,7 @@ function Login() {
          user_password: password,
          user_email: email
       }
-      const { data } = await loginUser(bodyObj)
-      setLoginData(data)
-      console.log(data)
+      await loginUser(bodyObj)
 
    }
 
