@@ -25,6 +25,7 @@ function Login() {
       if (data && data.data.access_token) {
          console.log(data)
          localStorage.setItem("access_token", data.data?.access_token)
+         console.log(data)
          navigate('/')
       }
    }, [isSuccess]);

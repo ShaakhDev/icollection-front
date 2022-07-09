@@ -11,14 +11,14 @@ import LanguageSwitcher from './LanguageSwitcher'
 function Navbar() {
     return (
         <>
-            <nav className='dark:text-white flex justify-between w-100 px-8 py-8'>
+            <nav className='dark:text-white flex justify-between items-center w-100 max-w-full px-8 py-8'>
                 <Logo />
                 <Searchbar />
-                <div className='flex'>
+                <Wrapper>
                     <ToggleTheme />
                     <LanguageSwitcher />
                     <AuthButtons />
-                </div>
+                </Wrapper>
             </nav>
         </>
     )
@@ -28,14 +28,23 @@ const AuthButtons = () => {
     return (
         <>
             {
-                isLoggedIn() ? (
+                isLoggedIn() ? null : (
                     <>
                         <LoginBtn />
                         <SignupBtn />
                     </>
-                ) : null
+                )
             }
         </>
+    )
+}
+
+
+const Wrapper = ({ children }) => {
+    return (
+        <div className='flex items-center justify-between '>
+            {children}
+        </div>
     )
 }
 

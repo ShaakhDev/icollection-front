@@ -7,7 +7,7 @@ import HomePage from "./pages/HomePage";
 function App() {
 
    return (
-      <div className="h-screen bg-white dark:bg-dark transition duration-200">
+      <div className="h-screen bg-white bg-[url('/public/Bg.webp')] dark:bg-dark transition duration-200">
          <Router>
             <Routes>
                <Route path="/" element={

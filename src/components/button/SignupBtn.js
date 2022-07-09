@@ -5,7 +5,7 @@ function SignupBtn() {
 
     return (
         <Link to="/signup">
-            <button>
+            <button className='transition duration-200 border border-accent-color-2  border-solid p-2 px-4 rounded-full'>
                 Sign Up
             </button>
         </Link>

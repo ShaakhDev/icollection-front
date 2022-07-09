@@ -9,12 +9,12 @@ export default function Header({
 }) {
     return (
         <div className="mb-10">
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-dark dark:text-white">
                 {heading}
             </h2>
-            <p className="mt-2 text-center text-sm text-gray-600 ">
+            <p className="mt-2 text-center text-sm text-dark dark:text-white">
                 {paragraph}
-                <Link to={linkUrl} className="font-medium text-green-600 hover:text-green-500">
+                <Link to={linkUrl} className="font-medium text-accent-color-1 ">
                     {linkName}
                 </Link>
             </p>
