@@ -1,11 +1,12 @@
-import Navbar from 'components/navbar/Navbar'
-import React from 'react'
+import Header from './Header'
+import PageLayout from 'layout/PageLayout'
+
 
 function Home() {
     return (
-        <div>
-            <Navbar />
-        </div>
+        <PageLayout>
+            <Header thing="props"/>
+        </PageLayout>
     )
 }
 

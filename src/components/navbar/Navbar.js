@@ -7,11 +7,11 @@ import Logo from 'components/navbar/Logo'
 import Searchbar from 'components/navbar/Searchbar'
 import ToggleTheme from './ToggleTheme'
 import LanguageSwitcher from './LanguageSwitcher'
-
+import { Button, OutlineButton } from 'components/button/Button'
 function Navbar() {
     return (
         <>
-            <nav className='dark:text-white flex justify-between items-center w-100 max-w-full px-8 py-8'>
+            <nav className='dark:text-white flex justify-between items-center w-100 max-w-full px-16 py-8'>
                 <Logo />
                 <Searchbar />
                 <Wrapper>
@@ -28,10 +28,10 @@ const AuthButtons = () => {
     return (
         <>
             {
-                isLoggedIn() ? null : (
+                isLoggedIn() ? (<Button text="My account" additional="p-2 px-4" />) : (
                     <>
-                        <LoginBtn />
-                        <SignupBtn />
+                        <Button text="Login" additional="p-2 px-5 mx-2" />
+                        < OutlineButton text="Sing Up" additional="p-2 px-5" />
                     </>
                 )
             }
