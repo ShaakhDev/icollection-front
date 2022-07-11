@@ -1,9 +1,10 @@
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import LoginPage from './pages/LoginPage'
 import SignupPage from "./pages/SignupPage";
-import PrivateRoute from "./components/PrivateRoute";
+import PrivateRoute from "private/PrivateRoute";
 import HomePage from "./pages/HomePage";
-
+import Account from "./pages/Account";
+import CreateCollection from 'pages/CreateCollection'
 function App() {
 
    return (
@@ -12,10 +13,18 @@ function App() {
             <Routes>
                <Route path="/" element={
                   <HomePage />
-
                } />
                <Route path="/login" element={<LoginPage />} />
                <Route path="/signup" element={<SignupPage />} />
+               <Route path="/account" element={
+                  <PrivateRoute>
+                     <Account />
+                  </PrivateRoute>} />
+               <Route path="/create-collection" element={
+                  <PrivateRoute>
+                     <CreateCollection />
+                  </PrivateRoute>
+               } />
             </Routes>
          </Router>
       </div>

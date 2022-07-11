@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { collectionsApi } from "./collectionsApi";
 import { usersApi } from "./usersApi";
 
 
@@ -7,7 +9,13 @@ export const store = configureStore({
         [usersApi.reducerPath]: usersApi.reducer,
     },
 
-    middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat(usersApi.middleware)
-    }
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+            .concat(usersApi.middleware)
+            .concat(collectionsApi.middleware)
+    ,
+    devTools: process.env.NODE_ENV !== 'production'
+
 });
+
+setupListeners(store.dispatch)

@@ -8,11 +8,12 @@ import Searchbar from 'components/navbar/Searchbar'
 import ToggleTheme from './ToggleTheme'
 import LanguageSwitcher from './LanguageSwitcher'
 import { Button, OutlineButton } from 'components/button/Button'
+import { Link } from 'react-router-dom'
 function Navbar() {
     return (
         <>
             <nav className='dark:text-white flex justify-between items-center w-100 max-w-full px-16 py-8'>
-                <Logo />
+                <Logo textColor="text-dark" />
                 <Searchbar />
                 <Wrapper>
                     <ToggleTheme />
@@ -28,10 +29,17 @@ const AuthButtons = () => {
     return (
         <>
             {
-                isLoggedIn() ? (<Button text="My account" additional="p-2 px-4" />) : (
+                isLoggedIn() ? (
+                    <Link to="/account">
+                        <Button text="My account" additional="p-2 px-4" />
+                    </Link>) : (
                     <>
-                        <Button text="Login" additional="p-2 px-5 mx-2" />
-                        < OutlineButton text="Sing Up" additional="p-2 px-5" />
+                        <Link to="/login">
+                            <Button text="Login" additional="p-2 px-5 mx-2" />
+                        </Link>
+                        <Link to="/signup">
+                            < OutlineButton text="Sing Up" additional="p-2 px-5" />
+                        </Link>
                     </>
                 )
             }

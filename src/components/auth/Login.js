@@ -12,7 +12,7 @@ loginFields.forEach(field => fieldsState[field.id] = '');
 
 function Login() {
    const navigate = useNavigate()
-   const [loginUser, { isLoading, isSuccess, isError, data, status }] = useLoginUserMutation();
+   const [loginUser, { isLoading, isSuccess, isError, data, status, error }] = useLoginUserMutation();
    const [loginState, setLoginState] = useState(fieldsState);
    const [notification, setNotification] = useState({
       isActive: false,
@@ -28,6 +28,7 @@ function Login() {
       if (data && data.data.access_token) {
          console.log(data)
          localStorage.setItem("access_token", data.data?.access_token)
+         localStorage.setItem("uId", data.data?.user?.id)
          console.log(data)
          navigate('/', { replace: true })
       }
@@ -38,8 +39,8 @@ function Login() {
       if (isError) {
          setNotification({
             isActive: true,
-            message: data.message,
-            code: data.status
+            message: error?.data.message,
+            code: error?.data.status
          })
          setTimeout(() => {
             setNotification({

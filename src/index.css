@@ -29,3 +29,63 @@ code {
 	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
 		monospace;
 }
+
+#homeTable {
+	margin: 0 auto;
+	border-collapse: collapse;
+	width: 70%;
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+#homeTable :where(td, th) {
+	padding: 10px;
+	text-align: center;
+}
+
+#homeTable thead {
+	height: 4rem;
+	background-color: #1e1c45;
+	color: #ffffff;
+	font-weight: bold;
+	background-image: url("../public/download.svg");
+}
+#homeTable tbody {
+	background-color: #5854a367;
+	color: #c1c1c1;
+}
+#homeTable tbody tr {
+	border-top: 1px solid #706bcd67;
+}
+#homeTable tbody tr:last-child {
+	height: 2rem;
+	background-color: #1e1c45;
+	background-image: url("../public/download.svg");
+}
+
+/* customize scrollbar thumb */
+::-webkit-scrollbar {
+	width: 0.5rem;
+	height: 0.7rem;
+	background-color: #c1c1c1;
+	border-radius: 2px !important;
+	overflow: hidden;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #383484;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: #484581;
+}
+::-webkit-scrollbar-thumb:active {
+	background-color: #706bcd;
+}
+::-webkit-scrollbar-track {
+	background-color: #c1c1c1;
+}
+::-webkit-scrollbar-track:hover {
+	background-color: #c1c1c1;
+}
+::-webkit-scrollbar-track:active {
+	background-color: #c1c1c1;
+}

@@ -25,7 +25,9 @@ module.exports = {
         '300': '#d1d5db',
         '400': '#9ca3af',
       },
-      'dark-lighter': '#1e1c45'
+      'dark-lighter': '#1e1c45',
+      'red': '#ff0000',
+      'green': '#00ff00',
     }
   },
   plugins: [],

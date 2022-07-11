@@ -1,10 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const token = localStorage.getItem('_token')
+const BASE_URL = process.env.REACT_APP_LOCALHOST;
+const token = localStorage.getItem('access_token');
 
 export const usersApi = createApi({
     reducerPath: 'users',
-    tagTypes: ['Users'],
+    keepUnusedDataFor: 60,
+    tagTypes: ['Users', 'Collections'],
     baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
     endpoints: (build) => ({
         loginUser: build.mutation({
@@ -16,7 +17,7 @@ export const usersApi = createApi({
                 },
                 body
             }),
-            invalidatesTags: ['Users'],
+
         }),
         signupUser: build.mutation({
             query: (body) => ({
@@ -27,7 +28,7 @@ export const usersApi = createApi({
                 },
                 body
             }),
-            invalidatesTags: ['Users']
+
 
         }),
         deleteUser: build.mutation({
@@ -39,12 +40,16 @@ export const usersApi = createApi({
 
         }),
         getUserProfile: build.query({
-            url: 'users/profile',
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
+            query: id => ({
+                url: 'users/profile',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: id
+            }),
+            providesTags: ['Users', 'Collections']
         })
     })
 })
