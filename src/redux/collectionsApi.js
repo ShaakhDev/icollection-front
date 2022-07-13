@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const BASE_URL = process.env.REACT_APP_LOCALHOST;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const token = localStorage.getItem('access_token');
 
 

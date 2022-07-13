@@ -17,7 +17,7 @@ function Login() {
    const [notification, setNotification] = useState({
       isActive: false,
       message: '',
-      code: null
+      type: ''
    })
 
    useEffect(() => {
@@ -40,13 +40,13 @@ function Login() {
          setNotification({
             isActive: true,
             message: error?.data.message,
-            code: error?.data.status
+            type: "error"
          })
          setTimeout(() => {
             setNotification({
                isActive: false,
                message: null,
-               code: null
+               type: null
             })
          }, 3000)
       }
@@ -74,7 +74,7 @@ function Login() {
             notification.isActive &&
             <Notification
                message={notification.message}
-               code={notification.code}
+               codetype={notification.type}
                setNotification={setNotification}
             />
          }

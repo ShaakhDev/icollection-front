@@ -19,7 +19,7 @@ function Signup() {
    const [notification, setNotification] = useState({
       isActive: false,
       message: '',
-      code: null
+      type: ""
    })
 
    const handleChange = (e) => setSignupState({ ...signupState, [e.target.id]: e.target.value });
@@ -48,13 +48,13 @@ function Signup() {
          setNotification({
             isActive: true,
             message: data.message,
-            code: data.status
+            type: 'error'
          })
          setTimeout(() => {
             setNotification({
                isActive: false,
                message: null,
-               code: null
+               type: ""
             })
          }, 3000)
          console.log(data)
@@ -67,7 +67,7 @@ function Signup() {
             notification.isActive &&
             <Notification
                message={notification.message}
-               code={notification.code}
+               type={notification.type}
                setNotification={setNotification}
             />
          }
