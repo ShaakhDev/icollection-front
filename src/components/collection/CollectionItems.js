@@ -12,7 +12,7 @@ function CollectionItems() {
 
 function ItemsTable() {
     return (
-        <table id='itemsTable' className=''>
+        <table id='itemsTable' className='text-dark '>
             <thead >
                 <tr>
                     <th>ID</th>
@@ -30,9 +30,9 @@ function ItemsTable() {
                     <td>Shakhzod</td>
                     <td>13.07.2022</td>
                     <td>
-                        <span className='cursor-pointer hover:bg-accent-color-2/70 rounded-full border border-accent-color-2 mr-1 px-2 text-white/60'>stamp</span>
-                        <span className='cursor-pointer hover:bg-accent-color-2/70 rounded-full border border-accent-color-2 mr-1 px-2 text-white/60'>hobby</span>
-                        <span className='cursor-pointer hover:bg-accent-color-2/70 rounded-full border border-accent-color-2 mr-1 px-2 text-white/60'>amazing</span>
+                        <span className='cursor-pointer hover:bg-accent-color-2/70 rounded-full border border-accent-color-2 mr-1 px-2  dark:text-white/60'>stamp</span>
+                        <span className='cursor-pointer hover:bg-accent-color-2/70 rounded-full border border-accent-color-2 mr-1 px-2  dark:text-white/60'>hobby</span>
+                        <span className='cursor-pointer hover:bg-accent-color-2/70 rounded-full border border-accent-color-2 mr-1 px-2  dark:text-white/60'>amazing</span>
                     </td>
                     <td>
                         <button className='mr-1  px-1 bg-red/70 text-gray-200 rounded-full'>delete</button>
@@ -45,10 +45,10 @@ function ItemsTable() {
                     <td>Shakhzod</td>
                     <td>13.07.2022</td>
                     <td>
-                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 text-white/60'>stamp</span>
-                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 text-white/60'>hobby</span>
-                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 text-white/60'>amazing</span>
-                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 text-white/60'>collection</span>
+                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 dark:text-white/60'>stamp</span>
+                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 dark:text-white/60'>hobby</span>
+                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 dark:text-white/60'>amazing</span>
+                        <span className='cursor-pointer rounded-full border hover:bg-accent-color-2/70  border-accent-color-2 mr-1 px-2 dark:text-white/60'>collection</span>
                     </td>
                     <td>
                         <button className='mr-1  px-1 bg-red/70 text-gray-200 rounded-full'>delete</button>

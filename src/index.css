@@ -78,7 +78,7 @@ code {
 #itemsTable thead {
 	height: 4rem;
 	background-color: #1e1c45;
-	/* color: #ffffff; */
+	color: #ffffff;
 	font-weight: bold;
 	background-image: url("../public/download.svg");
 }
