@@ -23,7 +23,7 @@ function ItemsTable() {
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody className='text-dark dark:text-white/70'>
                 <tr>
                     <td>q0cnov2</td>
                     <td>Item 1</td>
