@@ -12,7 +12,7 @@ function LastItems() {
 
 function Table() {
     return (
-        <table id='homeTable' className='bg-dark-lighter text-xl my-8'>
+        <table id='homeTable' className=' dark:text-white/60 dark:bg-dark-lighter text-xl my-8'>
             <thead >
                 <tr>
                     <th >Name</th>
@@ -36,7 +36,7 @@ function Table() {
                     <td>Collection 3</td>
                     <td>Author 3</td>
                 </tr>
-                <tr></tr>
+                <tr className='bg-dark'></tr>
             </tbody>
         </table>
     )

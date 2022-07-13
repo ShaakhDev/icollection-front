@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Notification({ code, message, setNotification }) {
-   const isError = code > 399;
+function Notification({ type, message, setNotification }) {
+   const isError = type === "error" ? true : false;
 
    const handleClose = () => {
       setNotification({
-         code: null,
+         type: null,
          message: null,
          isActive: false,
       })

@@ -3,7 +3,7 @@ import React from 'react'
 
 function Footer() {
     return (
-        <footer className='w-full min-h-[10vh] px-16 py-8  text-white bg-dark-lighter flex justify-around items-center align-baseline'>
+        <footer className='w-full min-h-[10vh] px-16 py-8  text-white bg-dark-lighter/70 dark:bg-dark-lighter flex justify-around items-center align-baseline'>
             <Logo textColor="text-white" />
             Copyright &copy; {new Date().getFullYear()}
         </footer>

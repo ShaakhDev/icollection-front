@@ -7,6 +7,7 @@ import { usersApi } from "./usersApi";
 export const store = configureStore({
     reducer: {
         [usersApi.reducerPath]: usersApi.reducer,
+        [collectionsApi.reducerPath]: collectionsApi.reducer,
     },
 
     middleware: (getDefaultMiddleware) =>

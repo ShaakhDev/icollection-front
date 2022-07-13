@@ -15,20 +15,18 @@ export const collectionsApi = createApi({
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
                 },
             }),
             invalidatesTags: ['Collections']
         }),
-        getCollection: build.query({
-            query: (body) => ({
-                url: 'collections/get',
+        getCollectionById: build.query({
+            query: (collection_id) => ({
+                url: 'collections/by-id',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
                 },
-                body
+                body: collection_id
             }),
             providesTags: ['Collections']
         }),
@@ -37,10 +35,8 @@ export const collectionsApi = createApi({
                 url: 'collections/create',
                 method: 'POST',
                 headers: {
-                    //set content type for sending image in body
-
-                    'Content-Type': 'multipart/form-data',
-
+                    // 'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
                 body
@@ -116,5 +112,6 @@ export const collectionsApi = createApi({
 
 export const {
     useGetMostPopularCollectionsQuery,
-    useCreateCollectionMutation
+    useCreateCollectionMutation,
+    useGetCollectionByIdQuery,
 } = collectionsApi;

@@ -8,16 +8,13 @@ import { useGetUserProfileQuery } from 'redux'
 const uId = localStorage.getItem('uId')
 
 function Account() {
-    console.log(uId)
     const { data, isSuccess, isError, error, isLoading } = useGetUserProfileQuery({ count: 5, id: uId });
     const navigate = useNavigate()
     const handleLogOut = () => {
-        localStorage.removeItem('access_token')
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('uId');
         navigate('/')
     }
-
-
-
 
     useEffect(() => {
         if (isSuccess) {
@@ -56,26 +53,21 @@ function UserDetails({ userData, isLoading }) {
     return (
         <>
             <h1 className='font-bold text-4xl mt-12 dark:text-white'>My Account Details </h1>
-            <div className='text-dark divide-x  w-full bg-dark-lighter p-5 my-5 rounded-xl grid grid-cols-5'>
-
+            <div className='text-dark divide-x  w-full bg-gray-400/60 dark:bg-dark-lighter p-5 my-5 rounded-xl grid grid-cols-5'>
                 <DetailItem isLoading={isLoading} name="Username" value={userData?.data?.user_name} />
                 <DetailItem isLoading={isLoading} name="Email" value={userData?.data?.user_email} />
                 <DetailItem isLoading={isLoading} name="User ID" value={userData?.data?.id} />
                 <DetailItem isLoading={isLoading} name="Role" value={userData?.data?.role} />
                 <DetailItem isLoading={isLoading} name="Status" value={userData?.data?.status} />
-
-
-
-
             </div>
         </>
     )
 }
 function DetailItem({ name, value, isLoading }) {
     return (
-        <div className='text-white pl-8 flex-column'>
-            <h1 className='text-gray-400'>{name}</h1>
-            <strong className='text-xl'>{isLoading ? "Loading..." : value}</strong>
+        <div className=' pl-8 flex-column'>
+            <h1 className='text-dark dark:text-gray-400'>{name}</h1>
+            <strong className='dark:text-white text-dark/80 text-xl'>{isLoading ? "Loading..." : value}</strong>
         </div>
     )
 }
@@ -85,38 +77,38 @@ function MyCollections({ collections }) {
         <>
             <h1 className='font-bold text-4xl mt-16 dark:text-white'>My Collections</h1>
             <div className='flex justify-start  overflow-x-auto py-8'>
-                {collections?.length !== 0 ? collections?.map(item => <Item key={item} />) : <h1 className='text-dark dark:text-white'>Nothing not created yet</h1>}
+                {collections?.length !== 0 ? collections?.map(item => <Card key={item.collection_id} collection={item} />) : <h1 className='text-dark dark:text-white'>Nothing has been created yet</h1>}
 
             </div>
         </>
     )
 }
-function Item() {
+function Card({ collection }) {
     return (
-        <div className='border border-solid mr-5 p-2 overflow-hidden border-x-gray-400/50 rounded-xl bg-dark-lighter h-[17rem] min-w-[15rem] max-w-[15rem]'>
-            <Link to="/collection/:collectionId">
+        <div className='border border-solid mr-5 p-2 overflow-hidden border-x-gray-400/50 rounded-xl bg-gray-300 dark:bg-dark-lighter h-[17rem] min-w-[15rem] max-w-[15rem]'>
+            <Link to={`/collection/${collection.collection_id}`}>
                 <div className='w-full min-h-70 max-h-[150px] overflow-hidden rounded-lg'>
-                    <img className='object-cover' src="/img/bg.jpg" alt="" />
+                    <img className='object-cover' src={collection?.image_url} alt="collection_img" />
                 </div>
             </Link>
             <div className='text-white flex justify-between px-2'>
                 <div>
 
-                    <span className='text-sm text-gray-400'>Name</span>
-                    <h1 className='text-sm'>Collection name</h1>
+                    <span className='text-sm text-dark-lighter/70 dark:text-gray-400'>Name</span>
+                    <h1 className='text-sm font-bold dark:text-white text-dark'>{collection?.name}</h1>
 
                 </div>
                 <div>
-                    <span className='text-sm text-gray-400'>Topic</span>
-                    <h1 className='text-sm'>Book</h1>
+                    <span className='text-sm text-dark-lighter/70 dark:text-gray-400'>Topic</span>
+                    <h1 className='text-sm font-bold dark:text-white text-dark'>{collection?.topic}</h1>
                 </div>
 
 
             </div>
-            <div className='text-white flex justify-between mt-5'>
+            {/* <div className='text-white flex justify-between mt-5'>
                 <span className='mx-2   px-4 border border-solid border-accent-color-2 hover:bg-accent-color-2 cursor-pointer  rounded-full'>Edit</span>
                 <span className='mx-2  px-4 border border-solid  border-accent-color-2 hover:bg-accent-color-2 cursor-pointer rounded-full'>Delete</span>
-            </div>
+            </div> */}
         </div>
     )
 }

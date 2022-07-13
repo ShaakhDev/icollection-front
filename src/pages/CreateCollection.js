@@ -1,14 +1,24 @@
 import { useState, useEffect } from 'react'
 import PageLayout from 'layout/PageLayout'
 import { useCreateCollectionMutation } from 'redux'
-
+import { useNavigate } from 'react-router-dom'
+import Notification from 'components/Notification'
 
 function CreateCollection() {
+    const navigate = useNavigate()
+    const uId = localStorage.getItem('uId')
     const [createCollection, { data, isSuccess, isError, error, isLoading }] = useCreateCollectionMutation()
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [image, setImage] = useState(null)
     const [topic, setTopic] = useState('')
+    const [notification, setNotification] = useState({
+        isActive: false,
+        message: null,
+        type: ""
+
+    })
+    // const [customFieldCount, setCustomFieldCount] = useState(0)
 
     const handleName = (e) => {
         setName(e.target.value)
@@ -18,38 +28,61 @@ function CreateCollection() {
     }
     const handleImage = (e) => {
         setImage(e.target.files[0])
+
     }
     const handleTopic = (e) => {
         setTopic(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    // const handleAddField = () => {
+    //     setCustomFieldCount(customFieldCount + 1)
+    // }
+    // const handleRemoveField = (e) => {
+    //     setCustomFieldCount(customFieldCount - 1)
+    // }
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        const obj = new FormData()
-        obj.append('name', name)
-        obj.append('description', description)
-        obj.append('image', image)
-        obj.append('topic', topic)
-        obj.append('user_id', localStorage.getItem('uId'))
-        console.log(obj)
-        createCollection(obj)
-        // console.log(data)
+        let formData = new FormData()
+        formData.append('name', name)
+        formData.append('description', description,)
+        formData.append('topic', topic)
+        formData.append('image', image, image?.name);
+        formData.append('user_id', uId)
+
+        await createCollection(formData)
+
     }
 
     useEffect(() => {
         if (isSuccess) {
-            console.log(data)
+            navigate(`/collection/${data?.data.collection_id}`)
         }
     }, [isSuccess])
 
     useEffect(() => {
         if (isError) {
-            console.log(error)
+            setNotification({
+                isActive: true,
+                message: error?.data.message,
+                type: "error"
+            })
+
         }
+        setTimeout(() => {
+            setNotification({
+                isActive: false,
+                message: null,
+                type: null
+            })
+        }, 3000)
     }, [isError])
 
     return (
         <PageLayout>
+            {notification.isActive && (
+
+                <Notification type={notification.type} setNotification={setNotification} message={notification.message} />
+            )}
             <h1 className='transition duration-200 text-dark dark:text-white text-4xl font-bold  py-12 px-16'>Collection details</h1>
 
             <div className='transition duration-200 min-h-[60vh] h-auto grid grid-cols-2 px-16 w-12/10 mx-16 mb-12 py-8 rounded-xl border border-solid border-gray-400/50 dark:bg-dark-lighter/50 bg-gray-200'>
@@ -63,7 +96,7 @@ function CreateCollection() {
                 </div>
                 <div className='px-10'>
                     <label className='transition duration-200 block text-dark dark:text-white' htmlFor="image">COLLECTION IMAGE</label>
-                    <input className='border border-solid border-gray-400/70 bg-white text-dark dark:text-white rounded-md mt-2' onChange={handleImage} type="file" id='image' />
+                    <input className='border border-solid border-gray-400/70 bg-white text-dark rounded-md mt-2' onChange={handleImage} type="file" id='image' />
                 </div>
                 <div className='px-10'>
                     <label className='transition duration-200 block text-dark dark:text-white' htmlFor="topics">TOPICS</label>
@@ -76,10 +109,29 @@ function CreateCollection() {
                         <option value="paintings">Paintings</option>
                     </select>
                 </div>
-                <button className='col-span-2 rounded-full max-h-[3rem] font-bold text-xl text-white bg-gradient-to-t active:opacity-80 transition duration-200 from-accent-color-1 to-accent-color-2 ' onClick={handleSubmit}>Create</button>
+                {/* {customFieldCount > 0 && ()} */}
+                <button className='border col-span-2 place-self-center p-1 px-8 text-dark dark:text-white rounded-full border-accent-color-2 hover:bg-accent-color-2 hover:text-white transition duration-200 ' >Add field</button>
+                <button className={`col-span-2 rounded-full max-h-[3rem]  text-xl text-white  active:opacity-80 transition duration-200  ${isLoading ? "bg-gray-400/50" : "bg-gradient-to-t from-accent-color-1 to-accent-color-2"} `} onClick={handleSubmit}>{isLoading ? 'SENDING...' : "CREATE"}</button>
             </div>
         </PageLayout>
     )
 }
 
+
+const CustomField = ({ id, handleRemoveField }) => {
+
+    return (
+        <div>
+            <select name="customField" id="custom">
+                <option value="string">Text</option>
+                <option value="number">Number</option>
+                <option value="date">Date</option>
+                <option value="boolean">Yes/No</option>
+                <option value="textarea">Multiline textarea</option>
+            </select>
+            <input type="text" name="customName" id="customName" placeholder="Field name" />
+            <button onClick={handleRemoveField} className='dark:text-white'>Remove field</button>
+        </div>
+    )
+}
 export default CreateCollection

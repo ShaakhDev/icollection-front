@@ -5,6 +5,9 @@ import PrivateRoute from "private/PrivateRoute";
 import HomePage from "./pages/HomePage";
 import Account from "./pages/Account";
 import CreateCollection from 'pages/CreateCollection'
+import Collection from './pages/Collection'
+
+
 function App() {
 
    return (
@@ -25,6 +28,7 @@ function App() {
                      <CreateCollection />
                   </PrivateRoute>
                } />
+               <Route path="/collection/:collection_id" element={<Collection />} />
             </Routes>
          </Router>
       </div>

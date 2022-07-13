@@ -52,12 +52,44 @@ code {
 }
 #homeTable tbody {
 	background-color: #5854a367;
-	color: #c1c1c1;
 }
 #homeTable tbody tr {
 	border-top: 1px solid #706bcd67;
 }
 #homeTable tbody tr:last-child {
+	height: 2rem;
+	background-color: #1e1c45;
+	background-image: url("../public/download.svg");
+}
+/* ============================ */
+#itemsTable {
+	margin: 0 auto;
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 15px;
+	overflow: hidden;
+}
+
+#itemsTable :where(td, th) {
+	padding: 10px;
+	text-align: center;
+}
+
+#itemsTable thead {
+	height: 4rem;
+	background-color: #1e1c45;
+	/* color: #ffffff; */
+	font-weight: bold;
+	background-image: url("../public/download.svg");
+}
+#itemsTable tbody {
+	background-color: #5854a367;
+	/* color: #c1c1c1; */
+}
+#itemsTable tbody tr {
+	border-top: 1px solid #706bcd67;
+}
+#itemsTable tbody tr:last-child {
 	height: 2rem;
 	background-color: #1e1c45;
 	background-image: url("../public/download.svg");
