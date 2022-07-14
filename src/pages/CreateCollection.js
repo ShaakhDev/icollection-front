@@ -94,9 +94,7 @@ function CreateCollection() {
     }, [isError])
 
 
-    const getConsole = () => {
-        console.log(customFields)
-    }
+
     return (
         <PageLayout>
             {notification.isActive && (
@@ -148,27 +146,11 @@ function CreateCollection() {
                 }
                 <button onClick={handleCustomFieldAdd} className='border col-span-2 place-self-center p-1 px-8 text-dark dark:text-white rounded-full border-accent-color-2 hover:bg-accent-color-2 hover:text-white transition duration-200 ' >Add field</button>
                 <button className={`col-span-2 rounded-full max-h-[3rem]  text-xl text-white  active:opacity-80 transition duration-200  ${isLoading ? "bg-gray-400/50" : "bg-gradient-to-t from-accent-color-1 to-accent-color-2"} `} onClick={handleSubmit}>{isLoading ? 'SENDING...' : "CREATE"}</button>
-                <button onClick={getConsole}>console</button>
             </div>
         </PageLayout>
     )
 }
 
 
-const CustomField = () => {
 
-    return (
-        <div className='px-10'>
-            <select name="customField">
-                <option value="string">Text</option>
-                <option value="number">Number</option>
-                <option value="date">Date</option>
-                <option value="boolean">Yes/No</option>
-                <option value="textarea">Multiline textarea</option>
-            </select>
-            <input type="text" name="" placeholder="Field name" />
-            <button className='dark:text-white'>Remove field</button>
-        </div>
-    )
-}
 export default CreateCollection
