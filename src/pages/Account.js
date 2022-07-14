@@ -8,7 +8,7 @@ import { useGetUserProfileQuery } from 'redux'
 const uId = localStorage.getItem('uId')
 
 function Account() {
-    const { data, isSuccess, isError, error, isLoading } = useGetUserProfileQuery({ count: 5, id: uId });
+    const { data, isLoading } = useGetUserProfileQuery({ count: 5, id: uId });
     const navigate = useNavigate()
     const handleLogOut = () => {
         localStorage.removeItem('access_token');
@@ -16,17 +16,6 @@ function Account() {
         navigate('/')
     }
 
-    useEffect(() => {
-        if (isSuccess) {
-            console.log(data)
-        }
-    }, [isSuccess])
-
-    useEffect(() => {
-        if (isError) {
-            console.log(error)
-        }
-    }, [isError])
 
 
     return (

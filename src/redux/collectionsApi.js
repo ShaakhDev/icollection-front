@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+// const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL = process.env.REACT_APP_LOCALHOST;
 const token = localStorage.getItem('access_token');
 
 
@@ -28,7 +29,11 @@ export const collectionsApi = createApi({
                 },
                 body: collection_id
             }),
-            providesTags: ['Collections']
+            providesTags: result =>
+                result
+                    ? [{ type: 'Collections', id: result.id }]
+                    : [{ type: 'Collections', id: 'LIST' }]
+
         }),
         createCollection: build.mutation({
             query: (body) => ({

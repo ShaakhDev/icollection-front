@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Notification from 'components/Notification'
 
 function CreateCollection() {
+
     const navigate = useNavigate()
     const uId = localStorage.getItem('uId')
     const [createCollection, { data, isSuccess, isError, error, isLoading }] = useCreateCollectionMutation()
@@ -18,7 +19,8 @@ function CreateCollection() {
         type: ""
 
     })
-    // const [customFieldCount, setCustomFieldCount] = useState(0)
+    const [customFields, setCustomFields] = useState([])
+
 
     const handleName = (e) => {
         setName(e.target.value)
@@ -34,12 +36,26 @@ function CreateCollection() {
         setTopic(e.target.value)
     }
 
-    // const handleAddField = () => {
-    //     setCustomFieldCount(customFieldCount + 1)
-    // }
-    // const handleRemoveField = (e) => {
-    //     setCustomFieldCount(customFieldCount - 1)
-    // }
+    const handleCustomFieldChange = (e, index) => {
+        const { name, value } = e.target
+        const list = [...customFields];
+        list[index][name] = value;
+        setCustomFields(list)
+    }
+
+    const handleCustomFieldAdd = () => {
+        setCustomFields([...customFields, { fieldType: "", fieldName: '' }])
+    }
+
+    const handleCustomFieldRemove = index => {
+        const list = [...customFields]
+        list.splice(index, 1)
+        setCustomFields(list)
+    }
+
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         let formData = new FormData()
@@ -48,7 +64,7 @@ function CreateCollection() {
         formData.append('topic', topic)
         formData.append('image', image, image?.name);
         formData.append('user_id', uId)
-
+        formData.append('custom_fields', JSON.stringify(customFields))
         await createCollection(formData)
 
     }
@@ -77,10 +93,13 @@ function CreateCollection() {
         }, 3000)
     }, [isError])
 
+
+    const getConsole = () => {
+        console.log(customFields)
+    }
     return (
         <PageLayout>
             {notification.isActive && (
-
                 <Notification type={notification.type} setNotification={setNotification} message={notification.message} />
             )}
             <h1 className='transition duration-200 text-dark dark:text-white text-4xl font-bold  py-12 px-16'>Collection details</h1>
@@ -109,28 +128,46 @@ function CreateCollection() {
                         <option value="paintings">Paintings</option>
                     </select>
                 </div>
-                {/* {customFieldCount > 0 && ()} */}
-                <button className='border col-span-2 place-self-center p-1 px-8 text-dark dark:text-white rounded-full border-accent-color-2 hover:bg-accent-color-2 hover:text-white transition duration-200 ' >Add field</button>
+                {
+                    customFields.map((field, index) => {
+                        return (
+                            <div key={index} className='px-10'>
+                                <select name="fieldType" onChange={e => handleCustomFieldChange(e, index)} value={field.fieldType}>
+                                    <option selected='selected' value="null">Choose type</option>
+                                    <option value="string">Text</option>
+                                    <option value="number">Number</option>
+                                    <option value="date">Date</option>
+                                    <option value="boolean">Yes/No</option>
+                                    <option value="textarea">Multiline textarea</option>
+                                </select>
+                                <input onChange={(e) => handleCustomFieldChange(e, index)} value={field.fieldName} type="text" name="fieldName" placeholder="Field name" />
+                                <button onClick={() => handleCustomFieldRemove(index)} className='dark:text-white'>Remove field</button>
+                            </div>
+                        )
+                    })
+                }
+                <button onClick={handleCustomFieldAdd} className='border col-span-2 place-self-center p-1 px-8 text-dark dark:text-white rounded-full border-accent-color-2 hover:bg-accent-color-2 hover:text-white transition duration-200 ' >Add field</button>
                 <button className={`col-span-2 rounded-full max-h-[3rem]  text-xl text-white  active:opacity-80 transition duration-200  ${isLoading ? "bg-gray-400/50" : "bg-gradient-to-t from-accent-color-1 to-accent-color-2"} `} onClick={handleSubmit}>{isLoading ? 'SENDING...' : "CREATE"}</button>
+                <button onClick={getConsole}>console</button>
             </div>
         </PageLayout>
     )
 }
 
 
-const CustomField = ({ id, handleRemoveField }) => {
+const CustomField = () => {
 
     return (
-        <div>
-            <select name="customField" id="custom">
+        <div className='px-10'>
+            <select name="customField">
                 <option value="string">Text</option>
                 <option value="number">Number</option>
                 <option value="date">Date</option>
                 <option value="boolean">Yes/No</option>
                 <option value="textarea">Multiline textarea</option>
             </select>
-            <input type="text" name="customName" id="customName" placeholder="Field name" />
-            <button onClick={handleRemoveField} className='dark:text-white'>Remove field</button>
+            <input type="text" name="" placeholder="Field name" />
+            <button className='dark:text-white'>Remove field</button>
         </div>
     )
 }
